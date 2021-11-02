@@ -95,7 +95,6 @@ namespace SDDM {
         Session m_lastSession;
 
         QString m_passPhrase;
-        QString m_sessionName;
         QString m_reuseSessionId;
 
         Auth *m_auth { nullptr };

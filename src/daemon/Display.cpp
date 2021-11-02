@@ -359,10 +359,6 @@ namespace SDDM {
         // cache last session
         m_lastSession = session;
 
-        // save session desktop file name, we'll use it to set the
-        // last session later, in slotAuthenticationFinished()
-        m_sessionName = session.fileName();
-
         // New VT
         if (session.xdgSessionType() != QLatin1String("x11") || m_displayServerType != X11DisplayServerType) {
             if (m_displayServerType == X11DisplayServerType)
@@ -372,7 +368,7 @@ namespace SDDM {
         }
 
         // some information
-        qDebug() << "Session" << m_sessionName << "selected, command:" << session.exec() << "for VT" << m_lastSession.vt();
+        qDebug() << "Session" << session.fileName() << "selected, command:" << session.exec() << "for VT" << m_lastSession.vt();
 
         QProcessEnvironment env;
         env.insert(session.additionalEnv());
@@ -427,7 +423,7 @@ namespace SDDM {
             else
                 stateConfig.Last.User.setDefault();
             if (mainConfig.Users.RememberLastSession.get())
-                stateConfig.Last.Session.set(m_sessionName);
+                stateConfig.Last.Session.set(m_lastSession.desktopSession());
             else
                 stateConfig.Last.Session.setDefault();
             stateConfig.save();

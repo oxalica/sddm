@@ -155,9 +155,12 @@ namespace SDDM {
                 delete si;
             }
         }
+
         // find out index of the last session
+        // Previous version of SDDM may store the absolute path of session. Get base name of it.
+        QString lastSession = QFileInfo(stateConfig.Last.Session.get()).completeBaseName();
         for (int i = 0; i < d->sessions.size(); ++i) {
-            if (d->sessions.at(i)->fileName() == stateConfig.Last.Session.get()) {
+            if (d->sessions.at(i)->desktopSession() == lastSession) {
                 d->lastIndex = i;
                 break;
             }
